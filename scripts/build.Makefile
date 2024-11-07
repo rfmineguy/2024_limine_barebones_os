@@ -1,8 +1,11 @@
-KERNEL_SRC := src
+KERNEL_SRC := src/kernel
+STDLIB_SRC := src/stdlib
 OUT := out
 
 C_KERNEL_SOURCE := $(wildcard $(KERNEL_SRC)/*.c)
+C_STDLIB_SOURCE := $(wildcard $(STDLIB_SRC)/*.c)
 S_KERNEL_SOURCE := $(wildcard $(KERNEL_SRC)/*.s)
+S_STDLIB_SOURCE := $(wildcard $(STDLIB_SRC)/*.s)
 
 C_SOURCES := $(C_KERNEL_SOURCE) $(C_STDLIB_SOURCE)
 S_SOURCES := $(S_KERNEL_SOURCE) $(S_STDLIB_SOURCE)
@@ -15,7 +18,8 @@ CC := x86_64-elf-gcc
 LD := x86_64-elf-ld
 AS := x86_64-elf-as
 
-CFLAGS := -ffreestanding -nostdlib -Ilimine
+CFLAGS := -fno-pic -fPIE -m64 -ffreestanding -nostdlib -Ilimine -ggdb
+ASFLAGS := -g
 
 .PHONY: build always limine
 always:
